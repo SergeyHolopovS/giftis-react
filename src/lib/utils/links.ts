@@ -13,4 +13,9 @@ export default function parseLinkType(type: LinkType) {
 	}
 }
 
-export const linkTypes: LinkType[] = ["FAMILY", "FRIEND", "RELATIONSHIP", "BEST_FRIENDS"];
+export const linkTypes: LinkType[] = [
+	"FAMILY",
+	"FRIEND",
+	"RELATIONSHIP",
+	"BEST_FRIENDS",
+];

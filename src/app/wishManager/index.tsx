@@ -75,20 +75,14 @@ export default function WishManager() {
 					<h2 className="text-center w-full text-lg text-gray-500">
 						Новая связь
 					</h2>
-                    <TextInput
+					<TextInput
 						placeholder="Заголовок"
 						{...register("title", {
 							required: "Поле заголовка обязательно",
 						})}
-                    />
-                    <TextInput
-						placeholder="Заметка"
-						{...register("note")}
-                    />
-                    <TextInput
-						placeholder="Ссылка"
-						{...register("link")}
-                    />
+					/>
+					<TextInput placeholder="Заметка" {...register("note")} />
+					<TextInput placeholder="Ссылка" {...register("link")} />
 					<button
 						type="submit"
 						className="w-full py-1 text-lg text-white rounded-sm cursor-pointer hover:scale-102 duration-200 bg-gray-400"

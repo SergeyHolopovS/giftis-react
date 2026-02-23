@@ -10,7 +10,7 @@ export default function Link({ link }: { link: LinkDto }) {
 		<button
 			type="button"
 			onClick={() => {
-				changeUser(link.user.id)
+				changeUser(link.user.id);
 				changeStage("wishlist");
 			}}
 			className="w-full h-15 shrink-0 rounded-md bg-gray-200 p-2 flex items-center justify-between gap-4 cursor-pointer"
