@@ -7,6 +7,9 @@ import type { IconType } from "react-icons/lib";
 import WishList from "./wishlist";
 import LinksManager from "./linksManager/links-manager";
 import WishManager from "./wishManager";
+import { useEffect } from "react";
+import useAuth from "@/lib/query/auth";
+import useSignin from "@/lib/query/signup";
 
 const stageIndexes: { [key: string]: number } = {
 	wishlist: 0,
@@ -38,6 +41,16 @@ const links: Link[] = [
 export default function Home() {
 	const stage = useStage((state) => state.stage);
 	const changeStage = useStage((state) => state.changeStage);
+	const { mutateAsync: auth } = useAuth();
+	const { mutateAsync: signin } = useSignin();
+
+	useEffect(() => {
+		try {
+			auth(window.Telegram.WebApp.initData);
+		} catch {
+			signin(window.Telegram.WebApp.initData);
+		}
+	}, []);
 
 	return (
 		<div className="w-screen h-screen box-border overflow-hidden flex justify-center items-center">
