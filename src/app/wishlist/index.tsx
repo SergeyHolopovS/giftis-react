@@ -9,10 +9,16 @@ export default function WishList() {
 	const user = useUser((state) => state.user);
 	const changeStage = useStage((state) => state.changeStage);
 	const { data: response } = useAllWishes(user);
-	if (response === undefined || response.data.length === 0)
+	if (response === undefined)
 		return (
 			<div className="size-full flex items-center justify-center">
 				<Spinner />
+			</div>
+		);
+	if (response.data.length === 0)
+		return (
+			<div className="size-full flex items-center justify-center">
+				Пока пусто...
 			</div>
 		);
 	return (

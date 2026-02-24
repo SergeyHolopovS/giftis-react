@@ -7,7 +7,7 @@ import type { IconType } from "react-icons/lib";
 import WishList from "./wishlist";
 import LinksManager from "./linksManager/links-manager";
 import WishManager from "./wishManager";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useAuth from "@/lib/query/auth";
 import useSignin from "@/lib/query/signup";
 
@@ -39,19 +39,27 @@ const links: Link[] = [
 ];
 
 export default function Home() {
+	const [authed, setAuthed] = useState<boolean>(false);
 	const stage = useStage((state) => state.stage);
 	const changeStage = useStage((state) => state.changeStage);
 	const { mutateAsync: auth } = useAuth();
 	const { mutateAsync: signin } = useSignin();
 
 	useEffect(() => {
-		try {
-			auth(window.Telegram.WebApp.initData);
-		} catch {
-			signin(window.Telegram.WebApp.initData);
-		}
+		const authFn = async () => {
+			try {
+				await auth(window.Telegram.WebApp.initData);
+			} catch {
+				await signin(window.Telegram.WebApp.initData);
+				await auth(window.Telegram.WebApp.initData);
+			} finally {
+				setAuthed(true);
+			}
+		};
+		authFn();
 	}, []);
 
+	if (!authed) return <></>;
 	return (
 		<div className="w-screen h-screen box-border overflow-hidden flex justify-center items-center">
 			<div className="relative max-w-125 w-full h-screen box-border overflow-hidden">

@@ -1,16 +1,17 @@
 import { createRoot } from "react-dom/client";
 import { Bounce, ToastContainer } from "react-toastify";
 import "./index.css";
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./app";
+import type { IRequestError } from "./lib/types/queries";
 
 axios.defaults.baseURL = "http://localhost:8080/";
 axios.defaults.withCredentials = true;
 
 const refreshFn = (failureCount: number, error: Error) => {
 	if (
-		error instanceof AxiosError &&
+		axios.isAxiosError<IRequestError>(error) &&
 		error.response !== undefined &&
 		error.response.status === 401
 	) {
