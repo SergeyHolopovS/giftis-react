@@ -47,11 +47,12 @@ export default function Home() {
 
 	useEffect(() => {
 		const authFn = async () => {
+			const initData = "1"
 			try {
-				await auth(window.Telegram.WebApp.initData);
+				await auth(initData);
 			} catch {
-				await signin(window.Telegram.WebApp.initData);
-				await auth(window.Telegram.WebApp.initData);
+				await signin(initData);
+				await auth(initData);
 			} finally {
 				setAuthed(true);
 			}

@@ -1,4 +1,8 @@
-export interface UserDto {
-	id: string;
-	name: string;
-}
+import { z } from 'zod'
+
+export const UserDto = z.object({
+	id: z.string(),
+	name: z.string(),
+})
+
+export type UserDto = z.infer<typeof UserDto>;

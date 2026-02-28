@@ -1,9 +1,10 @@
-import type { WishDto } from "@/lib/types/wishes";
+import { WishDto } from "@/lib/types/wishes";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 async function getAllWishesRequest(id: string | null) {
-	return await axios.get<WishDto[]>(`/v1/wish/user/${id}`);
+	const response = await axios.get<unknown[]>(`/v1/wish/user/${id}`);
+	return response.data.map((el) => WishDto.parse(el));
 }
 
 export default function useAllWishes(id: string | null) {

@@ -15,14 +15,14 @@ export default function WishList() {
 				<Spinner />
 			</div>
 		);
-	if (response.data.length === 0)
+	if (response.length === 0)
 		return (
 			<div className="size-full flex items-center justify-center">
 				Пока пусто...
 			</div>
 		);
 	return (
-		<Slide title={response.data[0].user.name}>
+		<Slide title={response[0].user.name}>
 			<div className="flex flex-col p-2 gap-2 overflow-y-auto box-border size-full max-h-full">
 				<button
 					type="button"
@@ -31,7 +31,7 @@ export default function WishList() {
 				>
 					Назад
 				</button>
-				{response.data.map((el) => (
+				{response.map((el) => (
 					<Wish key={el.id} {...el} />
 				))}
 			</div>

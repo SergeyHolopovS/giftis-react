@@ -5,10 +5,11 @@ import {
 	type SubmitHandler,
 } from "react-hook-form";
 import Slide from "../slide";
-import type { CreateWish } from "@/lib/types/wishes";
+import { CreateWish } from "@/lib/types/wishes";
 import { toast } from "react-toastify";
 import { doIfAxiosError } from "@/lib/types/queries";
 import { useQueryClient } from "@tanstack/react-query";
+import { zodResolver } from "@hookform/resolvers/zod"
 import useCreateWish from "@/lib/query/wishes/createWish";
 import Wish from "@/ui/wish";
 import Spinner from "@/ui/spinner";
@@ -16,7 +17,8 @@ import useDeleteWish from "@/lib/query/wishes/deleteWish";
 import TextInput from "@/ui/text-input";
 
 export default function WishManager() {
-	const { register, handleSubmit } = useForm<CreateWish>({
+	const { register, handleSubmit } = useForm({
+		resolver: zodResolver(CreateWish),
 		mode: "onSubmit",
 		reValidateMode: "onSubmit",
 	});
@@ -91,7 +93,7 @@ export default function WishManager() {
 					</button>
 				</form>
 				{response !== undefined ? (
-					response.data.map((el) => (
+					response.map((el) => (
 						<Wish
 							key={el.id}
 							canDelete

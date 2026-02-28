@@ -1,9 +1,10 @@
-import type { LinkDto } from "@/lib/types/links";
+import { LinkDto } from "@/lib/types/links";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 async function getAllLinksRequest() {
-	return await axios.get<LinkDto[]>("/v1/links");
+	const response = await axios.get<unknown[]>("/v1/links");
+	return response.data.map((el) => LinkDto.parse(el));
 }
 
 export default function useAllLinks() {

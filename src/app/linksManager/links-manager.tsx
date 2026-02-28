@@ -8,7 +8,7 @@ import {
 	type SubmitHandler,
 } from "react-hook-form";
 import useCreateLink from "@/lib/query/links/createLink";
-import type { CreateLink } from "@/lib/types/links";
+import { CreateLink } from "@/lib/types/links";
 import { doIfAxiosError } from "@/lib/types/queries";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
@@ -16,11 +16,13 @@ import parseLinkType, { linkTypes } from "@/lib/utils/links";
 import clsx from "clsx";
 import Spinner from "../../ui/spinner";
 import TextInput from "@/ui/text-input";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 export default function LinksManager() {
 	const { data: response } = useAllLinks();
 	const { mutateAsync } = useCreateLink();
 	const { register, handleSubmit, control, setValue } = useForm<CreateLink>({
+		resolver: zodResolver(CreateLink),
 		mode: "onSubmit",
 		reValidateMode: "onSubmit",
 		defaultValues: {
@@ -115,7 +117,7 @@ export default function LinksManager() {
 					</button>
 				</form>
 				{response !== undefined ? (
-					response.data
+					response
 						.sort((el1, el2) => el1.id.localeCompare(el2.id))
 						.map((el) => <Link key={el.id} {...el} />)
 				) : (
